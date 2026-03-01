@@ -1,5 +1,9 @@
 # NEPSE Stock Market Dashboard
 
+[![Live Demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://nepse-dashboard.streamlit.app/)
+
+**🌐 Live:** [nepse-dashboard.streamlit.app](https://nepse-dashboard.streamlit.app/)
+
 An interactive dashboard for analyzing Nepal Stock Exchange (NEPSE) stock market data with comprehensive visualizations and insights.
 
 ## 📊 Features
@@ -26,9 +30,10 @@ An interactive dashboard for analyzing Nepal Stock Exchange (NEPSE) stock market
 
 ### Installation
 
-1. **Clone or navigate to the project directory**
-   ```powershell
-   cd c:\Users\Asus\Development\nepse-dashboard-small
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/sobitkarki1/nepse-dashboard-small.git
+   cd nepse-dashboard-small
    ```
 
 2. **Install required packages**
@@ -168,7 +173,7 @@ Feel free to enhance the dashboard by:
 
 ## 📄 License
 
-This project is for educational and analytical purposes.
+MIT License — see [LICENSE](LICENSE) for details.
 
 ## 📧 Support
 
