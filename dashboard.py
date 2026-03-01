@@ -8,6 +8,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
+from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -44,7 +45,7 @@ st.markdown("""
 @st.cache_data
 def load_data():
     """Load and prepare data"""
-    df = pd.read_csv('ALL_COMPANIES_COMPLETE.csv')
+    df = pd.read_csv(Path(__file__).parent / 'ALL_COMPANIES_COMPLETE.csv')
     df['Date'] = pd.to_datetime(df['Date'])
     return df
 
@@ -129,7 +130,7 @@ def market_trends_tab(df):
         color_discrete_sequence=['#1f77b4']
     )
     fig_volume.update_layout(hovermode='x unified', height=400)
-    st.plotly_chart(fig_volume, width='stretch')
+    st.plotly_chart(fig_volume, use_container_width=True)
     
     # Value traded over time
     fig_value = px.line(
@@ -141,7 +142,7 @@ def market_trends_tab(df):
         color_discrete_sequence=['#2ca02c']
     )
     fig_value.update_layout(hovermode='x unified', height=400)
-    st.plotly_chart(fig_value, width='stretch')
+    st.plotly_chart(fig_value, use_container_width=True)
 
 def sector_analysis_tab(df):
     """Sector analysis visualization"""
@@ -170,7 +171,7 @@ def sector_analysis_tab(df):
             hole=0.4
         )
         fig_pie.update_traces(textposition='inside', textinfo='percent+label')
-        st.plotly_chart(fig_pie, width='stretch')
+        st.plotly_chart(fig_pie, use_container_width=True)
     
     with col2:
         # Sector by volume bar chart
@@ -184,7 +185,7 @@ def sector_analysis_tab(df):
             color_continuous_scale='Blues'
         )
         fig_bar.update_layout(showlegend=False)
-        st.plotly_chart(fig_bar, width='stretch')
+        st.plotly_chart(fig_bar, use_container_width=True)
     
     # Sector statistics table
     st.subheader("Sector Statistics")
@@ -192,7 +193,7 @@ def sector_analysis_tab(df):
     display_df['Value_NPR'] = display_df['Value_NPR'].apply(lambda x: f"NPR {x:,.0f}")
     display_df['Volume'] = display_df['Volume'].apply(lambda x: f"{x:,}")
     display_df['Trades'] = display_df['Trades'].apply(lambda x: f"{x:,}")
-    st.dataframe(display_df, width='stretch', hide_index=True)
+    st.dataframe(display_df, use_container_width=True, hide_index=True)
 
 def company_explorer_tab(df):
     """Company explorer with detailed analysis"""
@@ -240,7 +241,7 @@ def company_explorer_tab(df):
                 xaxis_rangeslider_visible=False
             )
             
-            st.plotly_chart(fig_price, width='stretch')
+            st.plotly_chart(fig_price, use_container_width=True)
         
         with col2:
             # Volume chart
@@ -254,7 +255,7 @@ def company_explorer_tab(df):
                 color_continuous_scale='Viridis'
             )
             fig_volume.update_layout(height=400, showlegend=False)
-            st.plotly_chart(fig_volume, width='stretch')
+            st.plotly_chart(fig_volume, use_container_width=True)
         
         # Performance metrics
         st.subheader("Performance Metrics")
@@ -278,7 +279,7 @@ def company_explorer_tab(df):
         recent_df = company_df.tail(10)[['Date', 'High', 'Low', 'Close', 'Volume', 'Value_NPR', 'Trades']].copy()
         recent_df['Date'] = recent_df['Date'].dt.strftime('%Y-%m-%d')
         recent_df = recent_df.sort_values('Date', ascending=False)
-        st.dataframe(recent_df, width='stretch', hide_index=True)
+        st.dataframe(recent_df, use_container_width=True, hide_index=True)
 
 def top_performers_tab(df):
     """Top and bottom performers"""
@@ -310,7 +311,7 @@ def top_performers_tab(df):
         top_gainers['Last_Price'] = top_gainers['Last_Price'].apply(lambda x: f"{x:.2f}")
         st.dataframe(
             top_gainers[['Symbol', 'Company', 'Sector', 'First_Price', 'Last_Price', 'Change_Pct']],
-            width='stretch',
+            use_container_width=True,
             hide_index=True
         )
     
@@ -322,7 +323,7 @@ def top_performers_tab(df):
         top_losers['Last_Price'] = top_losers['Last_Price'].apply(lambda x: f"{x:.2f}")
         st.dataframe(
             top_losers[['Symbol', 'Company', 'Sector', 'First_Price', 'Last_Price', 'Change_Pct']],
-            width='stretch',
+            use_container_width=True,
             hide_index=True
         )
     
@@ -344,7 +345,7 @@ def top_performers_tab(df):
         hover_data=['CompanyName', 'Sector']
     )
     fig_top_volume.update_layout(height=500, showlegend=False)
-    st.plotly_chart(fig_top_volume, width='stretch')
+    st.plotly_chart(fig_top_volume, use_container_width=True)
 
 def data_explorer_tab(df):
     """Raw data explorer"""
@@ -387,7 +388,7 @@ def data_explorer_tab(df):
     display_df = filtered_df.sort_values('Date', ascending=False).head(1000)
     display_df['Date'] = display_df['Date'].dt.strftime('%Y-%m-%d')
     
-    st.dataframe(display_df, width='stretch', height=600)
+    st.dataframe(display_df, use_container_width=True, height=600)
     
     # Download button
     csv = filtered_df.to_csv(index=False)
